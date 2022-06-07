@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-broker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-broker
+  template:
+    metadata:
+      labels:
+        app: event-broker
+    spec:
+      containers:
+        - name: event-broker
+          image: event-broker:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-broker-service
+spec:
+  selector:
+    app: event-broker
+  type: ClusterIP
+  ports:
+    - name: event-broker
+      protocol: TCP
+      port: 80
+      targetPort: 80

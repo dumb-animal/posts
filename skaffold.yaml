@@ -1,0 +1,51 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+deploy:
+  kubectl:
+    manifests: ["./infrastructure/k8s/*.yaml"]
+build:
+  local:
+    push: false
+  artifacts:
+    - image: client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+        noCache: false
+      sync:
+        infer: ["**/*"]
+    - image: comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+        noCache: false
+      sync:
+        infer: ["**/*"]
+    - image: event-broker
+      context: event-broker
+      docker:
+        dockerfile: Dockerfile
+        noCache: false
+      sync:
+        infer: ["**/*"]
+    - image: moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+        noCache: false
+      sync:
+        infer: ["**/*"]
+    - image: posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+        noCache: false
+      sync:
+        infer: ["**/*"]
+    - image: query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+        noCache: false
+      sync:
+        infer: ["**/*"]
